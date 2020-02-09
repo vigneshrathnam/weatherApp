@@ -24,6 +24,7 @@ router.get("/weather",(req,res)=>{
    res.json(data);
 }, function(error) {
    console.log(error);
+   res.json(error);
 });
 });
 router.get("/forecast",(req,res)=>{           
@@ -41,6 +42,7 @@ router.get("/forecast",(req,res)=>{
    res.json(data);
 }, function(error) {
    console.log(error);
+   res.json(error);
 });
 });
 
@@ -57,6 +59,7 @@ router.get("/uvi",(req,res)=>{
     res.json(data);          
     }, function(error) {            
 	 console.log(error);     
+	 res.json(error);
     });           
      }
     else{
