@@ -13,11 +13,14 @@ form.addEventListener("submit",function(e)
 {
   data.innerHTML="Loading...";
   e.preventDefault();
-  var params="";
-  if(form["type"].value == 1) params=`q=${form["val1"].value}`;
-  else if(form["type"].value == 2) params=`lat=${form["val1"].value}&lon=${form["val2"].value}`;
-  else params=`id=${form["val1"].value}`;
-  data.innerHTML=`Parameters: ${params}`;
+  var params={};
+  if(form["type"].value == 1) params={ q: form["val1"].value };
+  else if(form["type"].value == 2) params={lat: form["val1"].value, lon: form["val2"].value};
+  else params={id:  form["val1"].value};
+  axios.get("/data/weather",{ params })
+  .then((res)=>{ data.innerHTML=JSON.stringify(res.data); })
+  .catch((e)=>{ console.log(e); })
+  //data.innerHTML=`Parameters: ${params}`;
 });
 
 //Trigger when an event occurs
@@ -28,7 +31,6 @@ selectedType.innerHTML=`<label class="text-bold">Enter the City/ Country Name:</
 form["val1"].addEventListener(("input"),()=>{
   if(form["val1"].value.length>1) flag=1;
   else flag=0;
-  alert(this);
   if(flag)  form["btn"].removeAttribute("disabled");
 
 else form["btn"].setAttribute("disabled","true");
@@ -66,7 +68,7 @@ else form["btn"].setAttribute("disabled","true");
 });
 
 
-//Setting default trigger for text input when form.type does'nt occur
+//Setting default event lsitener for text input when form.type does'nt occur
 form["val1"].addEventListener(("input"),()=>{
   if(form["val1"].value.length>1) flag=1;
   else flag=0;                                           
